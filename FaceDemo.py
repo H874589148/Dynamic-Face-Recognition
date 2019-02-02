@@ -53,3 +53,27 @@
 
 #释放资源
 #capture.release()
+
+# 1.导入库
+import cv2
+# 2.加载人脸模型
+face = cv2.CascadeClassifier("F:\github_repository\Dynamic-Face-Recognition\image1.jpg")
+# 3.打开摄像头
+capture = cv2.VideoCapture(0)
+# 4.创建窗口
+cv2.namedWindow('Hawkeye 窗口')
+# 5.获取摄像头实时画面
+while True:
+    ret,frame = capture.read()
+    gary = cv2.cvtColor(frame,cv2.COLOR_RGB2GRAY)
+    faces = face.detectMultiScale(gary,1.1,3,0,(100,100))
+    for (x, y, w, h) in faces:
+        # 里面有四个参数 1.写图片 2.坐标原点 3.识别大小 4.颜色 5.线宽
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),10)
+        cv2.imshow('Hawkeye', frame)
+        if cv2.waitKey(5) & 0xFF == ord('q'):
+            break
+# 6.释放资源
+capture.release()
+# 7.关闭窗口
+cv2.destoryAllWindows()
